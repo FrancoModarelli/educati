@@ -1,0 +1,80 @@
+
+$bg-footer:#343a40;
+
+// mapas
+$backg: ( 
+        green:#80ab82
+); 
+
+/*bucles*/
+@each $backgr, $color in $backg {
+   .bg-#{$backgr} {
+       background-color: $color;
+   }
+}
+
+@each $sidenav in '.sb-sidenav-gray', '.sb-sidenav-gray .sb-sidenav-menu .sb-sidenav-menu-heading' {
+  #{$sidenav} { 
+      background-color:#585a58;
+   }
+} 
+
+@each $sidenavW in '.sb-sidenav-gray .sb-sidenav-menu .nav-link', '.sb-sidenav-gray .sb-sidenav-menu .nav-link .sb-nav-link-icon',
+'.sb-sidenav-gray .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow','.sb-sidenav-gray .sb-sidenav-menu .nav-link:hover',
+ '.sb-sidenav-gray .sb-sidenav-menu .nav-link.active','.sb-sidenav-gray .sb-sidenav-menu .nav-link.active .sb-nav-link-icon' {
+  #{$sidenavW} { 
+      color:#fff;
+   }
+} 
+
+//manejo general de la plantilla
+html,
+body {
+  height: 100%;
+}
+
+
+//Modal
+
+.botonModal{
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 1em;
+}
+
+/*
+.bg-green{
+
+    background-color:$bg-color-verde;
+}*/
+
+  .sb-sidenav-gray .sb-sidenav-footer {
+    background-color: $bg-footer;
+  }
+
+
+// Spacing
+//ajuste de columnas para simetria
+$spacer: 1rem;
+$grid-gutter-width: $spacer * 1.5;
+
+// Espacio variable para nav
+$topnav-base-height: 56px;
+$sidenav-base-width: 225px;
+
+// Modifica la simetria de la pagina.
+.container,
+.container-fluid {
+  padding-left: $grid-gutter-width;
+  padding-right: $grid-gutter-width;
+}
+
+
+.form-container{
+
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+
+}
