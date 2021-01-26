@@ -6,15 +6,15 @@
     <meta name="description" content="Página sobre educación">
     <meta name="keywords"  content="educati, educación, asistencia, curso, institución, ausencias, calificaciones, dashboard">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../educati/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="../educati/css/styles.css">
-    <script src="../educati/js/all.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/all.min.js"></script>
 
      <!-- Script del grafico -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script> 
 
     <!-- css propio -->
-    <link rel="stylesheet" href="../educati/css/estilo.css">
+    <link rel="stylesheet" href="../css/estilo.css">
     <title>Educati - Inicio</title>
 
    
@@ -22,7 +22,7 @@
 <body>
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-green">
     <a class="navbar-brand" href="index.html">
-      <img src="../educati/images/educati-logo.png" alt="logo educati">
+      <img src="../images/educati-logo.png" alt="logo educati">
     </a>
     <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
 </nav>
@@ -73,16 +73,18 @@
       <main>
           <div class="container-fluid">
               <h1 class="mt-4">Panel de Control</h1>
+
+              <!-- Grafico de Notas -->
               <canvas id="myChart"></canvas>
               <script>
               var ctx = document.getElementById('myChart').getContext('2d');
               var myChart = new Chart(ctx, {
                   type: 'bar',
                   data: {
-                      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                      labels: ['5 (Cinco)', '6 (Seis)', '7 (Siete)', '8 (Ocho)', '9 (Nueve)', '10 (Diez)'],
                       datasets: [{
-                          label: '# of Votes',
-                          data: [12, 19, 3, 5, 2, 3],
+                          label: 'Cantidad Alumnos por Nota',
+                          data: [3, 2, 9, 15, 8, 12],
                           backgroundColor: [
                               'rgba(255, 99, 132, 0.2)',
                               'rgba(54, 162, 235, 0.2)',
@@ -115,28 +117,28 @@
               </script>
               <div class="row padre-flex">
                   <div class="col-xl-3 col-md-6">
-                      <div class="card bg-primary text-white mb-4">
-                          <div class="card-body">Primary Card</div>
+                      <div class="card sb-sidenav-gray text-white mb-4">
+                          <div class="card-body">Asistencia</div>
                           <div class="card-footer d-flex align-items-center justify-content-between">
-                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <a class="small text-white stretched-link" href="pages/asistencia.html">Más Info</a>
                               <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                           </div>
                       </div>
                   </div>
                   <div class="col-xl-3 col-md-6">
-                      <div class="card bg-warning text-white mb-4">
-                          <div class="card-body">Warning Card</div>
+                      <div class="card sb-sidenav-gray text-white mb-4">
+                          <div class="card-body">Clases</div>
                           <div class="card-footer d-flex align-items-center justify-content-between">
-                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <a class="small text-white stretched-link" href="pages/clases.html">Más Info</a>
                               <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                           </div>
                       </div>
                   </div>
                   <div class="col-xl-3 col-md-6">
-                      <div class="card bg-success text-white mb-4">
-                          <div class="card-body">Success Card</div>
+                      <div class="card sb-sidenav-gray text-white mb-4">
+                          <div class="card-body">Calificaciones</div>
                           <div class="card-footer d-flex align-items-center justify-content-between">
-                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <a class="small text-white stretched-link" href="pages/notas.html">Más Info</a>
                               <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                           </div>
                       </div>
@@ -156,10 +158,10 @@
   </div>
 </div>
 <!-- Bootstrap core JavaScript -->
-  <script src="../educati/js/jquery.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
-  <script src="../educati/js/scripts.js"></script> 
+  <script src="../js/scripts.js"></script> 
 
   
   
