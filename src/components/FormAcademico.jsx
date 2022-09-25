@@ -6,7 +6,6 @@ import EnviarData from './EnviarData';
 import '../css/crear-form.css'
 import timeout from '../Helpers/timeout';
 import randomInt from '../Helpers/random';
-import { Finalizar } from './buttons/Finalizar';
 
 const FormAcademico = ({ seccion }) => {
 
@@ -36,9 +35,8 @@ const FormAcademico = ({ seccion }) => {
     //state de flags/aux
     const [varios, setVarios] = useState(false);
     const [espera, setEspera] = useState(false);
-    const [endButton, setEndButton] = useState(false);
     const [checkMateria, setCheckMateria] = useState([]);
-    const [checkCurso, setCheckCurso] = useState("");
+    const [checkCurso, setCheckCurso] = useState([]);
     const [auxInst, setAuxInst] = useState([]);
 
     //uso de referencia para obtener el valor del campo
@@ -62,7 +60,6 @@ const FormAcademico = ({ seccion }) => {
             obtenerDataPreceptores(`${Constantes.RUTA_API}/obtener_totalPreceptores.php`);
             obtenerDataProfesores(`${Constantes.RUTA_API}/obtener_totalProfesores.php`);
             setVarios(true);
-
         } else {
             const dataInst = await EnviarData(`${Constantes.RUTA_API}/obtener_institucion_unique.php`, conectado.id_Institucion);
             const alumnos = await EnviarData(`${Constantes.RUTA_API}/obtener_alumnos.php`, conectado.id_Institucion);
@@ -160,39 +157,38 @@ const FormAcademico = ({ seccion }) => {
 
     //manejador para colocar disable los cursos no seleccionados
     const handleCheckC = (event) => {
+        var updatedListC = [...checkCurso];
         const elementCurso = document.getElementsByClassName('form-check-input form-enable-curso');
 
         if (event.target.checked) {
-            event.target.classList.add('curso-selected')
+            updatedListC = [...checkCurso, event.target.id];
+            event.target.classList.add('curso-selected');
             event.target.classList.remove('form-enable-curso');
-            for (var i = 0; i < elementCurso.length; i++) {
-                elementCurso[i].disabled = true;
+            if (updatedListC.length >= 3) {
+                for (var h = 0; h < elementCurso.length; h++) {
+                    elementCurso[h].disabled = true;
+                }
+            } else {
+                for (var v = 0; v < elementCurso.length; v++) {
+                    elementCurso[v].disabled = false;
+                }
             }
         } else {
+            updatedListC.splice(checkCurso.indexOf(event.target.id), 1);
             event.target.classList.add('form-enable-curso');
-            event.target.classList.remove('curso-selected')
-            for (var j = 0; j < elementCurso.length; j++) {
-                elementCurso[j].disabled = false;
+            event.target.classList.remove('curso-selected');
+            if (updatedListC.length < 3) {
+                for (var t = 0; t < elementCurso.length; t++) {
+                    elementCurso[t].disabled = false;
+                }
+            } else {
+                for (var q = 0; q < elementCurso.length; q++) {
+                    elementCurso[q].disabled = true;
+                }
             }
         }
 
-        setCheckCurso(event.target.id);
-    }
-
-    //manejador para colocar disable el curso ya enviado, y dejar enable el resto de los cursos.
-    const handlerBlockC = () => {
-        const cursoSelected = document.getElementsByClassName('curso-selected');
-        const cursoNonSelected = document.getElementsByClassName('form-check-input form-enable-curso');
-
-        cursoSelected[0].classList.add('disabled');
-        cursoSelected[0].checked = false;
-        cursoSelected[0].disabled = true;
-        cursoSelected[0].classList.remove('curso-selected');
-
-        for (var i = 0; i < cursoNonSelected.length; i++) {
-            cursoNonSelected[i].disabled = false;
-        }
-
+        setCheckCurso(updatedListC);
     }
 
     // manejador para destildar materias
@@ -203,10 +199,12 @@ const FormAcademico = ({ seccion }) => {
         }
     }
 
-    //Obtengo los Id de los campos que necesito
-    const obtenerId = (ref) => {
-        var valor = ref.current.value
-        return valor.substring(0, 1);
+    // manejador para destildar cursos
+    const handlerUncheckC = () => {
+        const cursosSeleted = document.getElementsByClassName('curso-selected');
+        for (var z = 0; z < cursosSeleted.length; z++) {
+            cursosSeleted[z].checked = false;
+        }
     }
 
     //manejador para enviar datos ingresados en el form
@@ -226,8 +224,8 @@ const FormAcademico = ({ seccion }) => {
             }
             if (seccion === 'alumnos') {
                 //obtengo los ID que necesito para poder enviarlos a la base de datos.
-                const idPersonaAlumno = obtenerId(refAlumno);
-                const idPersonaTutor = obtenerId(refTutor);
+                const idPersonaAlumno = refAlumno.current.value;
+                const idPersonaTutor = refTutor.current.value;
 
                 //obtengo el ID Tutor de la tabla Tutores.
                 const idTutor = await EnviarData(`${Constantes.RUTA_API}/obtener_Idtutor.php`, idPersonaTutor);
@@ -254,39 +252,38 @@ const FormAcademico = ({ seccion }) => {
 
                     await timeout(500);//delay de 0.5 segundo
 
-                    if (seccion === 'alumnos') {
-                        const dataAlumnoM = {
-                            "idAlumno": idAlumno.id_Alumno,
-                            "materia": checkMateria[x],
-                        }
-
-                        const insertAMDb = await EnviarData(`${Constantes.RUTA_API}/insert_alumnoM.php`, dataAlumnoM);
-                        setError(insertAMDb.error);
-                        setSuccess(insertAMDb.msj);
-
-                        //deseleccion de materias, para nueva carga.
-                        handlerUncheckM();
-                        //limpio array checkMateria
-                        setCheckMateria([]);
-
-                        await timeout(500);//delay de 0.5 segundo
-                        setSuccess('');
-                        setEspera(false);
+                    const dataAlumnoM = {
+                        "idAlumno": idAlumno.id_Alumno,
+                        "materia": checkMateria[x],
                     }
+
+                    const insertAMDb = await EnviarData(`${Constantes.RUTA_API}/insert_alumnoM.php`, dataAlumnoM);
+                    setError(insertAMDb.error);
+                    setSuccess(insertAMDb.msj);
+
+                    //deseleccion de materias, para nueva carga.
+                    handlerUncheckM();
+                    //limpio array checkMateria
+                    setCheckMateria([]);
+
+                    await timeout(500);//delay de 0.5 segundo
+                    setSuccess('');
+                    setEspera(false);
+
                 }
             }
             if (seccion === 'docentes') {
                 //obtengo los ID que necesito para poder enviarlos a la base de datos.
-                const idPersonaProfesor = obtenerId(refProf);
-                const nroLegajo = 10;
-                console.log(nroLegajo);
-                setEspera(false);
-                /*//damos de alta el profesor en base profesor
+                const idPersonaProfesor = refProf.current.value;
+                const nroLegajo = randomInt(99999999);
+
+                //damos de alta el profesor en base profesor
                 const dataAltaProf = {
                     "idPersonaProfesor": idPersonaProfesor,
-                    "legajo": nroLegajo,
+                    "nroLegajo": nroLegajo,
                 }
 
+                //hago insert en tabla Profesor
                 const insertAltaP = await EnviarData(`${Constantes.RUTA_API}/insert_profesor.php`, dataAltaProf);
                 setError(insertAltaP.error);
                 setSuccess(insertAltaP.msj);
@@ -302,9 +299,10 @@ const FormAcademico = ({ seccion }) => {
 
                     const dataProfesorM = {
                         "idProfesor": idProfesor.id_Profesor,
-                        "materia": checkMateria[x],
+                        "materia": checkMateria[k],
                     }
 
+                    //hago insert en tabla profesorMateria.
                     const insertPMDb = await EnviarData(`${Constantes.RUTA_API}/insert_profesorM.php`, dataProfesorM);
                     setError(insertPMDb.error);
                     setSuccess(insertPMDb.msj);
@@ -317,7 +315,7 @@ const FormAcademico = ({ seccion }) => {
                     await timeout(500);//delay de 0.5 segundo
                     setSuccess('');
                     setEspera(false);
-                }*/
+                }
             }
         }
         //En el caso de Preceptores, consultamos si seleccionaron curso/s
@@ -328,157 +326,193 @@ const FormAcademico = ({ seccion }) => {
             } else {
                 setError('');
             }
+
+            //obtengo los valores que necesito para poder enviarlos a la base de datos.
+            const idPersonaPreceptor = refPrecep.current.value;
+            const idInst = refInst.current.value;
+            const curso1 = checkCurso[0];
+            var curso2 = checkCurso[1];
+            var curso3 = checkCurso[2];
+
+            if (checkCurso[1] === undefined){
+                curso2 = 1
+                curso3 = 1
+            }
+
+            if (checkCurso[2] === undefined){
+                curso3 = 1
+            }
+
+            //damos de alta el profesor en base profesor
+            const dataAltaPrec = {
+                "idPersonaPreceptor": idPersonaPreceptor,
+                "idInst": idInst,
+                "curso1": curso1,
+                "curso2": curso2,
+                "curso3": curso3
+            }
+
+            //hago insert en tabla Preceptor
+            const insertAltaPre = await EnviarData(`${Constantes.RUTA_API}/insert_preceptor.php`, dataAltaPrec);
+            setError(insertAltaPre.error);
+            setSuccess(insertAltaPre.msj);
+
+            //deseleccion de materias, para nueva carga.
+            handlerUncheckC();
+            //limpio array checkMateria
+            setCheckCurso([]);
+
+            await timeout(500);//delay de 0.5 segundo
+            setSuccess('');
+
+            setEspera(false);
+            
         }
     }
 
 
-return (
-    <div className='contenedor'>
-        <div className='title-section'>
-            <h1 className='title-form'>Crear {seccion === 'anioLectivo' ? 'Año Lectivo' : seccion}</h1>
-            {
-                error &&
-                <div className="error-msg">
-                    {error}
-                </div>
-            }
-            {
-                success &&
-                <div className="success-msg">
-                    {success}
-                </div>
-            }
-            <Volver seccion={'/adm_gral/' + seccion} />
-        </div>
-        <div className='aclaracion'>
-            <span>Se asociara al {seccion} con los cursos y materias. En el caso de Alumnos, se asociara también a su Tutor</span>
-        </div>
-        <form className='form-crear' onSubmit={handleCrear}>
-            <div className="form-row">
-                <div className="form-group col-md-6">
-                    <label htmlFor="nombre">Persona</label>
-                    {seccion === 'alumnos' ?
-                        <select id="inputAlumno" className="form-control form-inputs-crear" ref={refAlumno}>
-                            <option defaultValue={""}>Elegir...</option>
-                            {arregloAlumnos.map((alumno, index) => <option key={index}>{alumno.id_Persona + ' - ' + alumno.Ncompleto}</option>)}
-                        </select> :
-                        ''}
-                    {seccion === 'docentes' ?
-                        <select id="inputProfesores" className="form-control form-inputs-crear" ref={refProf}>
-                            <option defaultValue={""}>Elegir...</option>
-                            {arregloProfesores.map((profesor, index) => <option key={index}>{profesor.id_Persona + ' - ' + profesor.Ncompleto}</option>)}
-                        </select> :
-                        ''}
-                    {seccion === 'preceptores' ?
-                        <select id="inputPreceptores" className="form-control form-inputs-crear" ref={refPrecep}>
-                            <option defaultValue={""}>Elegir...</option>
-                            {arregloPreceptores.map((preceptor, index) => <option key={index}>{preceptor.id_Persona + ' - ' + preceptor.Ncompleto}</option>)}
-                        </select> :
-                        ''}
-                </div>
-                {varios ?
-                    <div className="form-group col-md-4">
-                        <label htmlFor="inputInstitucion">Institución</label>
-                        <select id="inputInstitucion" className="form-control form-inputs-crear" ref={refInst}>
-                            <option defaultValue={""}>Elegir...</option>
-                            {arregloInst.map((inst, index) => <option key={index}>{inst.Nombre}</option>)
-                            }
-                        </select>
+    return (
+        <div className='contenedor'>
+            <div className='title-section'>
+                <h1 className='title-form'>Crear {seccion === 'anioLectivo' ? 'Año Lectivo' : seccion}</h1>
+                {
+                    error &&
+                    <div className="error-msg">
+                        {error}
                     </div>
-                    : <div className="form-group col-md-6">
-                        <label htmlFor="institucion">Institución</label>
-                        <input
-                            type="text"
-                            readOnly
-                            className="form-control-plaintext plano"
-                            id="institucion"
-                            placeholder="Institución"
-                            value={nombreInst}
-                            ref={refInst}
-                        />
-                    </div>}
-                {//Si la seccion es Preceptor, mostrará este campo, de no serlo, estará oculto
-                    seccion === 'preceptores' ?
-                        <div className='titulo-seccion'>
-                            <label htmlFor="cursos">Cursos</label>
-                        </div>
-                        :
-                        <div className='desaparecer'>
-                            <label htmlFor="cursos">Cursos</label>
-                        </div>
                 }
                 {
-                    seccion === 'preceptores' ?
-                        arregloCursos.map((curso, indice) =>
-                            <div className="form-check" key={indice}>
-                                <input
-                                    className="form-check-input form-enable-curso"
-                                    type="checkbox"
-                                    value={curso.Cnombre}
-                                    id={curso.Id_Curso}
-                                    onClick={handleCheckC}
-                                />
-                                <label className="form-check-label" >
-                                    {curso.Cnombre}
-                                </label>
-                            </div>)
-                        :
-                        <div className='desaparecer' />
+                    success &&
+                    <div className="success-msg">
+                        {success}
+                    </div>
                 }
-
-                {
-                    seccion === 'alumnos' || seccion === 'docentes' ?
-                        <div className='titulo-seccion'>
-                            <label htmlFor="materias">Materias</label>
-                        </div>
-                        :
-                        ''
-                }
-                {
-                    seccion === 'alumnos' || seccion === 'docentes' ?
-                        arregloMaterias.map((materia, ind) =>
-                            <div className="form-check" key={ind}>
-                                <input
-                                    className="form-check-input form-enable-materia"
-                                    type="checkbox"
-                                    value={materia.Id_Materia}
-                                    id={materia.Id_Materia}
-                                    onClick={handleCheckM}
-                                />
-                                <label className="form-check-label" htmlFor="defaultCheck2">
-                                    {materia.Nombre}
-                                </label>
-                            </div>)
-                        :
-                        ''
-                }
-                {
-                    seccion === 'alumnos' ?
-                        <div className="form-group col-md-8 titulo-seccion">
-                            <label htmlFor="nombre">Padre-Madre/Tutor</label>
-                            <select id="inputTutor" className="form-control form-inputs-crear" ref={refTutor}>
+                <Volver seccion={'/adm_gral/' + seccion} />
+            </div>
+            <div className='aclaracion'>
+                <span>Se asociara a los {seccion} a cursos o materias. En caso de Alumnos tambien se le asociara el Padre/Madre o Tutor.</span>
+            </div>
+            <form className='form-crear' onSubmit={handleCrear}>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <label htmlFor="nombre">Persona</label>
+                        {seccion === 'alumnos' ?
+                            <select id="inputAlumno" className="form-control form-inputs-crear" ref={refAlumno}>
                                 <option defaultValue={""}>Elegir...</option>
-                                {arregloTutores.map((tutor, index) => <option key={index}>{tutor.id_Persona + ' - ' + tutor.NombreC}</option>)
+                                {arregloAlumnos.map((alumno, index) => <option key={index} value={alumno.id_Persona}>{alumno.Ncompleto}</option>)}
+                            </select> :
+                            ''}
+                        {seccion === 'docentes' ?
+                            <select id="inputProfesores" className="form-control form-inputs-crear" ref={refProf}>
+                                <option defaultValue={""}>Elegir...</option>
+                                {arregloProfesores.map((profesor, index) => <option key={index} value={profesor.id_Persona}>{profesor.Ncompleto}</option>)}
+                            </select> :
+                            ''}
+                        {seccion === 'preceptores' ?
+                            <select id="inputPreceptores" className="form-control form-inputs-crear" ref={refPrecep}>
+                                <option defaultValue={""}>Elegir...</option>
+                                {arregloPreceptores.map((preceptor, index) => <option key={index} value={preceptor.id_Persona}>{preceptor.Ncompleto}</option>)}
+                            </select> :
+                            ''}
+                    </div>
+                    {varios ?
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputInstitucion">Institución</label>
+                            <select id="inputInstitucion" className="form-control form-inputs-crear" ref={refInst}>
+                                <option defaultValue={""}>Elegir...</option>
+                                {arregloInst.map((inst, index) => <option key={index} value={inst.Id_Inst}>{inst.Nombre}</option>)
                                 }
                             </select>
                         </div>
-                        :
-                        ''
-                }
-            </div>
-            <div className='botonesAnio'>
-                <button type="submit" disable={espera.stringify} className={espera ? 'btn disabled' : "btn btn-siguiente"}>
-                    {endButton ? "Siguiente" : "Crear"}
-                </button>
-                {endButton &&
-                    <Finalizar
-                        seccion={seccion} />
-                }
-            </div>
-        </form >
-    </div >
-)
-            }
+                        : <div className="form-group col-md-6">
+                            <label htmlFor="institucion">Institución</label>
+                            <input
+                                type="text"
+                                readOnly
+                                className="form-control-plaintext plano"
+                                id="institucion"
+                                placeholder="Institución"
+                                value={nombreInst}
+                                ref={refInst}
+                            />
+                        </div>}
+                    {//Si la seccion es Preceptor, mostrará este campo, de no serlo, estará oculto
+                        seccion === 'preceptores' ?
+                            <div className='titulo-seccion'>
+                                <label htmlFor="cursos">Cursos</label>
+                            </div>
+                            :
+                            <div className='desaparecer'>
+                                <label htmlFor="cursos">Cursos</label>
+                            </div>
+                    }
+                    {
+                        seccion === 'preceptores' ?
+                            arregloCursos.map((curso, indice) =>
+                                <div className="form-check" key={indice}>
+                                    <input
+                                        className="form-check-input form-enable-curso"
+                                        type="checkbox"
+                                        value={curso.Cnombre}
+                                        id={curso.Id_Curso}
+                                        onClick={handleCheckC}
+                                    />
+                                    <label className="form-check-label" >
+                                        {curso.Cnombre}
+                                    </label>
+                                </div>)
+                            :
+                            <div className='desaparecer' />
+                    }
+
+                    {
+                        seccion === 'alumnos' || seccion === 'docentes' ?
+                            <div className='titulo-seccion'>
+                                <label htmlFor="materias">Materias</label>
+                            </div>
+                            :
+                            ''
+                    }
+                    {
+                        seccion === 'alumnos' || seccion === 'docentes' ?
+                            arregloMaterias.map((materia, ind) =>
+                                <div className="form-check" key={ind}>
+                                    <input
+                                        className="form-check-input form-enable-materia"
+                                        type="checkbox"
+                                        value={materia.Id_Materia}
+                                        id={materia.Id_Materia}
+                                        onClick={handleCheckM}
+                                    />
+                                    <label className="form-check-label" htmlFor="defaultCheck2">
+                                        {materia.Nombre}
+                                    </label>
+                                </div>)
+                            :
+                            ''
+                    }
+                    {
+                        seccion === 'alumnos' ?
+                            <div className="form-group col-md-8 titulo-seccion">
+                                <label htmlFor="nombre">Padre-Madre/Tutor</label>
+                                <select id="inputTutor" className="form-control form-inputs-crear" ref={refTutor}>
+                                    <option defaultValue={""}>Elegir...</option>
+                                    {arregloTutores.map((tutor, index) => <option key={index} value={tutor.id_Persona}>{tutor.NombreC}</option>)
+                                    }
+                                </select>
+                            </div>
+                            :
+                            ''
+                    }
+                </div>
+                <div className='botonesAnio'>
+                    <button type="submit" disable={espera.stringify} className={espera ? 'btn disabled' : "btn btn-siguiente"}>Crear
+                    </button>
+                </div>
+            </form >
+        </div >
+    )
+}
 
 
 export default FormAcademico
