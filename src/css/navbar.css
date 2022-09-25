@@ -1,0 +1,32 @@
+*{
+    font-family: 'Lato-regular',serif;
+}
+
+.Navbar{
+    background-color: #f0d8f3;
+    padding-top: 0.3rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+/* Usuario */
+.show-usuario{
+    color: #6605b6;
+    font-size: 1rem;
+    margin-right: 1.5rem;
+    font-family: 'Lato-black', serif;
+}
+
+.show-usuario::first-letter{
+    text-transform: uppercase;
+}
+
+.show-perfil{
+    font-family: 'Lato-bold',serif;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 12px;
+}

@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+/* General */
+*{
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Fuentes */
+@font-face {
+  font-family: 'Lato-regular';
+  src: local('Lato'), url(./fonts/Lato-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lato-bold';
+  src: local('Lato'), url(./fonts/Lato-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lato-black';
+  src: local('Lato'), url(./fonts/Lato-Black.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta-regular';
+  src: local('Mukta'), url(./fonts/Mukta-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta-bold';
+  src: local('Mukta'), url(./fonts/Mukta-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mukta-extrabold';
+  src: local('Mukta'), url(./fonts/Mukta-ExtraBold.ttf) format('truetype');
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* Visualizacion de APP */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.flex{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.grid{
+  display: grid;
+  width: 100%;
+  grid-template-rows: 0.065fr auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content{
+  width: 100%;
+  padding: 20px;
 }

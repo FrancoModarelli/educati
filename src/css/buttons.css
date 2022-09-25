@@ -1,0 +1,37 @@
+:root{
+    --color-primario: #6d19b1;
+    --color-secundario: #ac8fc4;
+    --color-terciario: #8957b1;
+}
+
+.btn-Volver a{
+    background-color: var(--color-primario);
+    padding: 10px 15px;
+    color: #fff;
+    border: 1px solid;
+    border-color: var(--color-primario);
+    font-family: 'Lato-bold', serif;
+}
+
+.btn-Volver a:hover{
+    background-color: transparent;
+    color: var(--color-primario);
+}
+
+
+.btn-fin{
+    background-color: var(--color-terciario);
+    color: #fff;
+}
+
+.btn-fin:hover{
+    background-color: transparent;
+    color: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+.btn-exit a{
+    background-color: transparent;
+    color: #fff;
+}
+

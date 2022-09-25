@@ -1,0 +1,199 @@
+:root{
+    --color-primario: #6d19b1;
+    --color-secundario: #ac8fc4;
+    --color-alterno:#8b0ef2;
+}
+
+.title-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.title-form{
+    font-size: 30px;
+    text-transform: capitalize;
+}
+
+.title-sub_section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.title-sub{
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.persona__{
+    margin-right: 6rem;
+}
+.usuario__{
+    margin-left: 1rem;
+}
+
+.form-crear{
+    display: grid;
+    grid-template-rows: 8fr 1fr;
+    align-content: center;
+    justify-content: space-around;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 1rem;
+}
+
+.form_usuario{
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 1fr 1fr 2fr 3fr ;
+    margin-right: 5rem;
+}
+.form_persona{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-inputs-crear{
+    width: 15rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 2rem;
+}
+
+
+.form-switch{
+    padding-left: 0;
+}
+
+.apeM{
+    margin-left: 0;
+    margin-bottom: 0.1rem;
+}
+
+
+
+.fechaNac{
+    margin-top: 0.5rem;
+}
+
+
+.plano{
+    color: #747272;
+    font-family: 'Lato-bold',serif;
+    padding-left: 2.9rem;
+}
+
+
+.botonesAnio{
+    display: grid;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.botonesAnio button{
+    margin-right: 1.5rem;
+}
+
+.btn-siguiente{
+    background-color: var(--color-alterno);
+    color: #fff;
+}
+
+.btn-siguiente:hover{
+    background-color: transparent;
+    color: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+.disabled{
+    cursor:default;
+    background-color: #747272;
+    border-color: #747272;
+    color: #fff;
+}
+
+
+.aclaracion{
+    font-style: italic;
+    color: #747272;
+    font-size: 0.8rem;
+}
+
+.form-check .form-check-input{
+    margin-left: 0rem;
+}
+.form-check-label{
+    margin-left: 0.5rem;
+}
+
+
+#flexSwitchCheckDefault{
+    float: right;
+}
+
+.titulo-seccion{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+
+.desaparecer{
+    display: none;
+}
+
+/* Error */
+
+.error-msg{
+    background-color: #f8ababcf;
+    font-weight: 700;
+    padding: 10px 0 10px 0;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center
+
+}
+
+.error-msg__{
+    width: 120%;
+}
+
+/* Success */
+
+.success-msg{
+    background-color: #b8f8abcf;
+    font-weight: 700;
+    padding: 10px 0 10px 0;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center
+
+}
+
+
+/* DatePicker */
+
+#date_timepicker_start{
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    margin-left: 2rem;
+}
+
+input[type="date"]{
+    padding: 0.2rem 0.5rem ;
+    color: #86888b;
+}
+

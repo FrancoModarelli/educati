@@ -1,0 +1,39 @@
+:root{
+    --color-primario: #a647b3;
+    --color-disable: #9c6fa1;
+    --fc-today-bg-color: #b79aba; 
+    --fc-button-active-bg-color: #9c6fa1;
+}
+
+.fc-view-harness, .fc-view-harness-active{
+height: 710px !important;
+}
+
+
+.fc-col-header-cell-cushion::first-letter,.fc-toolbar-title::first-letter{
+    text-transform: uppercase;
+}
+
+.fc-daygrid-day-number{
+    color: #6d19b1;
+}
+
+.fc-col-header-cell-cushion {
+    color:#9e5cd4;
+}
+
+.fc .fc-button-primary:disabled{
+    background-color: var(--color-disable);
+    border-color: var(--color-disable);
+}
+
+.fc .fc-button-primary{
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);  
+}
+
+.fc .fc-button-primary:hover{
+    background-color: #fff;
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+}

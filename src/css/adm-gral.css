@@ -1,0 +1,72 @@
+
+/* General */
+.secciones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.card-adm{
+    width: 18rem;
+    border: 1px solid #ac8fc4;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 10px;
+
+}
+
+/* Ingresar a seccion */
+.btn-adm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Lato-regular', serif;
+    color:#6d19b1
+}
+
+.btn-adm:hover{
+    opacity: 1;
+    color:#6d19b1
+}
+
+.btn-adm > *{
+    transform: translateY(20px);
+    transition: transform 0.25s;
+}
+
+.btn-adm:hover > *{
+    transform: translateY(0);
+}
+
+/* Titulo de seccion */
+.title-name{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    font-size: 20px;
+    font-family: 'Lato-regular', serif;
+    color: #000;
+    background-color: #fff;
+    border-radius: 10px;
+    opacity: 65%;
+}
+
+

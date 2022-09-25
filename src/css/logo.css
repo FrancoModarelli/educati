@@ -1,0 +1,13 @@
+.logo{
+    display: block;
+    transition: all 0.5s;
+}
+
+.logoHalf img{
+    display: block;
+    transition: all 0.5s;
+}
+
+.logo-close img{
+    opacity: 65%;
+}
