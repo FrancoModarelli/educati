@@ -11,7 +11,7 @@ const AdminGeneral = () => {
             <div className='title'>
                 <h1 className='title-menu'>Administración General</h1>
             </div>
-            <div className='secciones'>
+            <div className='secciones_adm'>
                 {menuAdmGral.map((item, index) => {
                     return (
                         <div className="card card-adm" key={index}>

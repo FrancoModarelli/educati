@@ -247,7 +247,7 @@ const FormPersonas = ({ seccion }) => {
                 <h2 className='title-sub usuario__'>Crear Usuario</h2>
                 <h2 className='title-sub persona__'>Crear Persona</h2>
             </div>
-            <form className='form-crear' onSubmit={handleCrear}>
+            <form className='form-crear_alt' onSubmit={handleCrear}>
                 <div className='form_usuario'>
                     <div className="form-group col-md-9">
                         <label htmlFor="usuario">Usuario</label>

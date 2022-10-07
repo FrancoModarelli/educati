@@ -22,6 +22,7 @@ const Abm = ( { url, delmod, seccion } ) => {
             //console.log(json);
             const respuestaJson = json;
             setArregloJson(respuestaJson);
+            console.log(respuestaJson)
             setIsReady(true)
         })
     }

@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import '../css/modal.css'
 import { NavLink } from 'react-router-dom'
+import { useEffect } from 'react';
 
 const ModalMod = ({ estado, titulo, seccion, setEstado, array }) => {
 
 
     const [keys, setKeys] = useState([]);
 
-    const actualizarData = (e) =>{
+    const actualizarData = (e, dataNew) =>{
         
         //prevenimos el refresh de la pagina
         e.preventDefault();

@@ -5,7 +5,7 @@
 .sidebar{
     background-color: #6d19b1;
     color: #fff;
-    height: 100vh;
+    height: 100%;
     /*height: calc(100vh - 50px);*/
     transition: all 0.5s;
     width: 230px;
@@ -71,7 +71,7 @@
 .sidebar-close{
     background-color: #6d19b1;
     color: #fff;
-    height: 100vh;
+    height: 100%;
     transition: all 0.5s;
     width: 65px;
     display: flex;

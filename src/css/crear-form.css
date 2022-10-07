@@ -46,11 +46,21 @@
     margin-top: 1rem;
 }
 
+.form-crear_alt{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    justify-content: space-around;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 1rem;
+}
+
 .form_usuario{
     display: grid;
     justify-content: center;
-    grid-template-rows: 1fr 1fr 2fr 3fr ;
-    margin-right: 5rem;
+    grid-template-rows: 1fr 1fr 4fr ;
+    margin-right: 4.8rem;
 }
 .form_persona{
     display: grid;
@@ -64,7 +74,9 @@
     margin-left: 2rem;
 }
 
-
+.general{
+    margin-left: 5px;
+}
 .form-switch{
     padding-left: 0;
 }
@@ -90,14 +102,13 @@
 
 .botonesAnio{
     display: grid;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 1.5rem;
+    align-content: center;
+    justify-content: end;
+    margin-top: 1rem;
+    margin-left: 4rem;
+
 }
 
-.botonesAnio button{
-    margin-right: 1.5rem;
-}
 
 .btn-siguiente{
     background-color: var(--color-alterno);
